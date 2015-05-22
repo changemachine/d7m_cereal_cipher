@@ -1,0 +1,5 @@
+name = Cereal Cipher
+description = Cereal Cipher allows you to encode text using the shift-cipher (AKA Caesar cipher) method of encryption.
+package = Epicodus Examples
+core = 7.x
+files[] = cereal_cipher.module

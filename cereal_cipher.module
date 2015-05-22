@@ -1,0 +1,56 @@
+<?php
+
+function cereal_cipher(){
+    $items = array();
+    //address(action-params)
+    $items['cereal_cipher'] = array(
+        'title' => 'Cereal Cipher',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('cereal_cipher_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+//Generate form elements
+function cereal_cipher_form(){
+    $form['shiftBy'] = array(
+        '#title' => 'Shift by...',
+        '#type' => 'select',
+        '#options' => array(// = array, or => array?
+            'right' => t('right'),
+            'left' => t('left'),),
+        '#element_validate' => array('valid_str'/*, 'valid_num', 'valid_dir'*/ ),
+        '#required' => TRUE,
+    );
+    $form['shiftAt'] = array(
+        '#title' => 'Shift to the...',
+        '#type' => 'select',
+        '#options' => array(// = array, or => array?
+            'right' => t('right'),
+            'left' => t('left'),),
+        // '#element_validate' => array('valid_str') //JUST CLIENT-SIDE FOR NOW
+        '#required' => TRUE,
+    );
+
+}
+
+
+// function valid_num($element){
+//     if($element is such-n-such){
+//         form_error('Naw!  Do it right!');
+//     }
+// }
+//
+// function valid_dir($element){
+//     if($element is such-n-such){
+//         form_error('Naw!  Do it right!');
+//     }
+// }
+
+function valid_str($element){
+    if(preg_replace($element) != true){ //preg_replace?  True?
+        form_error('What was that?  Use American letters!');
+    }
+}
