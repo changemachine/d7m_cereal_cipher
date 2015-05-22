@@ -16,12 +16,9 @@ function cereal_cipher(){
 //Generate form elements
 function cereal_cipher_form(){
     $form['shiftBy'] = array(
-        '#title' => 'Shift by...',
-        '#type' => 'select',
-        '#options' => array(// = array, or => array?
-            'right' => t('right'),
-            'left' => t('left'),),
-        '#element_validate' => array('valid_str'/*, 'valid_num', 'valid_dir'*/ ),
+        '#title' => 'Shift by 1 to 14',
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_integer_positive', 'valid_num'),
         '#required' => TRUE,
     );
     $form['shiftAt'] = array(
@@ -33,24 +30,34 @@ function cereal_cipher_form(){
         // '#element_validate' => array('valid_str') //JUST CLIENT-SIDE FOR NOW
         '#required' => TRUE,
     );
+    $form['topSecret'] = array(
+        '#title' => 'Enter your top-secret text',
+        '#type' => 'textfield',
+        '#element_validate' => array('sanitize'),
 
+    )
 }
 
+function sanitize($element/*$form, &$form_state*/){
+    strtolower(preg_replace('/[^A-Za-z0-9\-]/', ' ', $form_state));
+    if(strlen($element) > 1000){
+        form_error("<em>Therefore, since brevity is the soul of wit, and tediousness the limbs and outward flourishes, I will be brief.</em><br />~William Shakespeare, Hamlet")
+    }
+}
 
-// function valid_num($element){
-//     if($element is such-n-such){
-//         form_error('Naw!  Do it right!');
+function valid_num($element){
+    if($element < 1 || $element > 14){
+        form_error('We accept only integers between 1 and 14.');
+    }
+}
+
+// function valid_str($element){
+//     $string = format_string($string, $params);
+//     $safe_string = check_plain($string);
+//     $placeholder_string = drupal_placeholder($string);// changed in d8
+//
+//     if(preg_replace($element) != true){ //preg_replace?  True?
+//         form_error('What was that?  Use American letters!');
 //     }
 // }
 //
-// function valid_dir($element){
-//     if($element is such-n-such){
-//         form_error('Naw!  Do it right!');
-//     }
-// }
-
-function valid_str($element){
-    if(preg_replace($element) != true){ //preg_replace?  True?
-        form_error('What was that?  Use American letters!');
-    }
-}
