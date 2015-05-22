@@ -1,6 +1,6 @@
 <?php
 
-function cereal_cipher(){
+function cereal_cipher_menu(){
     $items = array();
     //address(action-params)
     $items['cereal_cipher'] = array(
@@ -10,8 +10,17 @@ function cereal_cipher(){
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM,
     );
+    $items['cereal_ciphered'] = array(
+        'title' => 'Top Secret Encrypted Results',
+        'page callback' => 'cer',
+
+    );
+
+    var_dump($items);
     return $items;
 }
+
+
 
 //Generate form elements
 function cereal_cipher_form(){
@@ -27,27 +36,34 @@ function cereal_cipher_form(){
         '#options' => array(// = array, or => array?
             'right' => t('right'),
             'left' => t('left'),),
-        // '#element_validate' => array('valid_str') //JUST CLIENT-SIDE FOR NOW
         '#required' => TRUE,
     );
-    $form['topSecret'] = array(
-        '#title' => 'Enter your top-secret text',
+    $form['secret'] = array(
+        '#title' => 'Enter your secret text',
         '#type' => 'textfield',
         '#element_validate' => array('sanitize'),
-
-    )
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        'type' => 'submit',
+        'value' => 'Encrypt',
+    );
+    return $form;
 }
 
-function sanitize($element/*$form, &$form_state*/){
-    strtolower(preg_replace('/[^A-Za-z0-9\-]/', ' ', $form_state));
-    if(strlen($element) > 1000){
-        form_error("<em>Therefore, since brevity is the soul of wit, and tediousness the limbs and outward flourishes, I will be brief.</em><br />~William Shakespeare, Hamlet")
+function sanitize($element){
+    $input = $element['value'];
+    var_dump($input);
+    $cleanString = strtolower(preg_replace('/[^A-Za-z0-9\-]/', ' ', $input));
+    $length = strlen($cleanString);
+    if($length > 1000){
+        form_error($element, t("<em>Therefore, since brevity is the soul of wit, and tediousness the limbs and outward flourishes, I will be brief.</em><br />  ~William Shakespeare, Hamlet"));
     }
 }
 
 function valid_num($element){
     if($element < 1 || $element > 14){
-        form_error('We accept only integers between 1 and 14.');
+        form_error($element, t('We accept only integers between 1 and 14.'));
     }
 }
 
@@ -61,3 +77,34 @@ function valid_num($element){
 //     }
 // }
 //
+
+function cereal_secret_form_submit($form, &$form_state){
+    $shiftBy = $form_state['values']['shiftBy'];
+    $shiftTo = $form_state['values']['shiftTo'];
+    $secret = $form_state['values']['secret'];
+    $_SESSION['topSecret'] = '';
+    $alphabet = range(a-z);
+    $alphabetter = array();
+    $offset = '';
+    if($shiftTo == 'right'){
+        $offset = 
+    }
+
+    for($offset, i< 26, i++){
+
+    }
+
+    function encoder($secret){
+
+        foreach($secret as $char){
+            preg_replace($char, )
+        }
+
+    }
+
+}
+
+function cereal_secret(){
+    $secret = $_SESSION['topSecret'];
+    return "<p></p>"
+}
