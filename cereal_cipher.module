@@ -15,12 +15,8 @@ function cereal_cipher_menu(){
         'page callback' => 'cer',
 
     );
-
-    var_dump($items);
     return $items;
 }
-
-
 
 //Generate form elements
 function cereal_cipher_form(){
@@ -35,7 +31,8 @@ function cereal_cipher_form(){
         '#type' => 'select',
         '#options' => array(// = array, or => array?
             'right' => t('right'),
-            'left' => t('left'),),
+            'left' => t('left'),
+            ),
         '#required' => TRUE,
     );
     $form['secret'] = array(
@@ -78,33 +75,46 @@ function valid_num($element){
 // }
 //
 
-function cereal_secret_form_submit($form, &$form_state){
+function cereal_cipher_form_submit($form, &$form_state){
     $shiftBy = $form_state['values']['shiftBy'];
     $shiftTo = $form_state['values']['shiftTo'];
     $secret = $form_state['values']['secret'];
+    // $input = str_split($secret);
+    $outputMe = array();
     $_SESSION['topSecret'] = '';
-    $alphabet = range(a-z);
-    $alphabetter = array();
-    $offset = '';
-    if($shiftTo == 'right'){
-        $offset = 
-    }
 
-    for($offset, i< 26, i++){
+    // array_search($i, array_keys($alphabet));
 
-    }
 
-    function encoder($secret){
-
-        foreach($secret as $char){
-            preg_replace($char, )
+    $input = str_split('abba');
+    foreach($input as $char){
+        for($i=0; $i < 5; $i++){
+            $letter = $char++;
+            echo($char);
         }
-
     }
 
-}
 
-function cereal_secret(){
-    $secret = $_SESSION['topSecret'];
-    return "<p></p>"
+//     if($shiftTo == 'left'){
+//         for($i = $offset, $i < 26, i++){
+//         }
+//     } //else($alphabet = array_combine(range('a','z'),range('a','z'));
+//
+//
+// // PUSHES THE OFFSET LETTER
+//     foreach($input as $char){
+//         if(in_array($alphabet)){
+//             array_push($outputMe, $alphabet[$char]);
+//         }
+//         else(array_push($char));
+//     }
+//
+//     }
+
+
+
+    function cereal_cipher(){
+        $secret = $_SESSION['topSecret'];
+        return "<p>HELLO</p>";
+    }
 }
