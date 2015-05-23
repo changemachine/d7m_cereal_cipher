@@ -2,7 +2,7 @@
 
 function cereal_cipher_menu(){
     $items = array();
-    //address(action-params)
+    //addresses & action-params
     $items['cereal_cipher'] = array(
         'title' => 'Cereal Cipher',
         'page callback' => 'drupal_get_form',
@@ -10,10 +10,11 @@ function cereal_cipher_menu(){
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM,
     );
-    $items['cereal_ciphered'] = array(
+    $items['cipher_result'] = array(
         'title' => 'Top Secret Encrypted Results',
-        'page callback' => 'cer',
-
+        'page callback' => 'cipher_result',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
     );
     return $items;
 }
@@ -30,8 +31,8 @@ function cereal_cipher_form(){
         '#title' => 'Shift to the...',
         '#type' => 'select',
         '#options' => array(// = array, or => array?
-            'right' => t('right'),
-            'left' => t('left'),
+            '#right' => t('right'),
+            '#left' => t('left'),
             ),
         '#required' => TRUE,
     );
@@ -42,79 +43,68 @@ function cereal_cipher_form(){
         '#required' => TRUE,
     );
     $form['submit'] = array(
-        'type' => 'submit',
-        'value' => 'Encrypt',
+        '#type' => 'submit',
+        '#value' => 'Encrypt',
     );
     return $form;
 }
 
-function sanitize($element){
-    $input = $element['value'];
-    var_dump($input);
-    $cleanString = strtolower(preg_replace('/[^A-Za-z0-9\-]/', ' ', $input));
-    $length = strlen($cleanString);
-    if($length > 1000){
-        form_error($element, t("<em>Therefore, since brevity is the soul of wit, and tediousness the limbs and outward flourishes, I will be brief.</em><br />  ~William Shakespeare, Hamlet"));
-    }
-}
-
-function valid_num($element){
-    if($element < 1 || $element > 14){
-        form_error($element, t('We accept only integers between 1 and 14.'));
-    }
-}
-
-// function valid_str($element){
-//     $string = format_string($string, $params);
-//     $safe_string = check_plain($string);
-//     $placeholder_string = drupal_placeholder($string);// changed in d8
-//
-//     if(preg_replace($element) != true){ //preg_replace?  True?
-//         form_error('What was that?  Use American letters!');
+// function sanitize($element){
+//     $input = $element['value'];
+//     var_dump($input);
+//     $cleanString = strtolower(preg_replace('/[^A-Za-z0-9\-]/', ' ', $input));
+//     $length = strlen($cleanString);
+//     if($length > 1000){
+//         form_error($element, t("<em>Therefore, since brevity is the soul of wit, and tediousness the limbs and outward flourishes, I will be brief.</em><br />  ~William Shakespeare, Hamlet"));
 //     }
 // }
 //
-
-function cereal_cipher_form_submit($form, &$form_state){
-    $shiftBy = $form_state['values']['shiftBy'];
-    $shiftTo = $form_state['values']['shiftTo'];
-    $secret = $form_state['values']['secret'];
-    // $input = str_split($secret);
-    $outputMe = array();
-    $_SESSION['topSecret'] = '';
-
-    // array_search($i, array_keys($alphabet));
-
-
-    $input = str_split('abba');
-    foreach($input as $char){
-        for($i=0; $i < 5; $i++){
-            $letter = $char++;
-            echo($char);
-        }
-    }
-
-
-//     if($shiftTo == 'left'){
-//         for($i = $offset, $i < 26, i++){
-//         }
-//     } //else($alphabet = array_combine(range('a','z'),range('a','z'));
+// function valid_num($element){
+//     if($element < 1 || $element > 14){
+//         form_error($element, t('We accept only integers between 1 and 14.'));
+//     }
+// }
+//
+// function cereal_cipher_form_submit($form, &$form_state){
+//     $shiftBy = $form_state['values']['shiftBy'];
+//     $shiftTo = $form_state['values']['shiftTo'];
+//     $secret = $form_state['values']['secret'];
+//     // $input = str_split($secret);
+//     $outputMe = array();
+//     $_SESSION['topSecret'] = '';
+//
+//     // array_search($i, array_keys($alphabet));
 //
 //
-// // PUSHES THE OFFSET LETTER
+//     $input = str_split('abba');
 //     foreach($input as $char){
-//         if(in_array($alphabet)){
-//             array_push($outputMe, $alphabet[$char]);
+//         for($i=0; $i < 5; $i++){
+//             $letter = $char++;
+//             echo($char);
 //         }
-//         else(array_push($char));
 //     }
 //
+//
+// //     if($shiftTo == 'left'){
+// //         for($i = $offset, $i < 26, i++){
+// //         }
+// //     } //else($alphabet = array_combine(range('a','z'),range('a','z'));
+// //
+// //
+// // // PUSHES THE OFFSET LETTER
+// //     foreach($input as $char){
+// //         if(in_array($alphabet)){
+// //             array_push($outputMe, $alphabet[$char]);
+// //         }
+// //         else(array_push($char));
+// //     }
+// //
+// //     }
+//
+//
+//
+//     function cipher_result(){
+//         $secret = $_SESSION['topSecret'];
+//         return "<p>HELLO</p>";
 //     }
-
-
-
-    function cereal_cipher(){
-        $secret = $_SESSION['topSecret'];
-        return "<p>HELLO</p>";
-    }
-}
+// }
